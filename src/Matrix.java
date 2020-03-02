@@ -96,8 +96,4 @@ public class Matrix {
 			powerOfMatrix();
 		}
 	}
-	public void sexy()
-	{
-		System.out.println("sexy");
-	}
 }
