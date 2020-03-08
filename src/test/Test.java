@@ -1,10 +1,11 @@
 package test;
 
 import model.Matrix;
+import model.MatrixInput;
 
 public class Test {
-	public void testRead() {
-		Matrix mat = new Matrix(3);
+	public void testMatrixInput() {
+		MatrixInput mat = new MatrixInput();
 		System.out.println(mat.read());
 	}
 	public void testNormel() {
@@ -40,7 +41,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		Test t = new Test();
-		t.testRead();
+		t.testMatrixInput();
 
 	}
 

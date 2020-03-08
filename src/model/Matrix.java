@@ -1,30 +1,16 @@
 package model;
 
 import java.util.Random;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.File;
 public class Matrix {
 	private int[][] M;
 	private int num;
 	private Random rand;
-	private File fl;
-	private Scanner sc;
 	
 	public Matrix () {
 		num = 9;
 		M = new int[num][num];
 		rand = new Random();
-		fl = new File ("C:\\Users\\peerh\\Desktop\\MAtric.txt");
-		try {
-			sc = new Scanner(fl);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public File getFl() {
-		return fl;
+		
 	}
 	public Matrix(int num) {
 		this();
@@ -118,26 +104,5 @@ public class Matrix {
 	}
 	public void setNum(int num) {
 		this.num = num;
-	}
-	/*
-	 * Here I am trying to read the file 
-	 * */
-	public String read() {
-		String re = "";
-		while (sc.hasNextBigInteger()|| sc.hasNextLine()) {
-			re = Integer.toString(sc.nextInt());
-		}
-		sc.close();
-		return re;	
-	}
-	/*
-	 * Here I am trying to see if the file had been already imported
-	 * */
-	public String trFile() {
-		String trf = "";
-		if  (fl.canRead()) {
-			trf = "it is working";
-		}
-		return trf;
 	}
 }
