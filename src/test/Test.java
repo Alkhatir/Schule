@@ -1,14 +1,27 @@
 package test;
 
-import java.util.HashMap;
+import java.io.IOException;
 
 import model.Matrix;
 import model.MatrixInput;
 
 public class Test {
 	public void testMatrixInput() {
-		MatrixInput mat = new MatrixInput();
-		System.out.println(mat.read());
+		
+		try {
+			MatrixInput mat = new MatrixInput("C:\\Users\\peerh\\Desktop\\Nicht fertige Aufgaben\\G1.csv");
+			Matrix m = new Matrix(mat.rowMatrixLength());
+			for (int i = 0; i < mat.rowMatrixLength(); i++)
+				for (int y = 0; y <mat.rowMatrixLength(); y++)
+					m.fillMatrix(i, y, mat.getMatrix()[i][y]);
+			m.distanceMatrixCreator();
+			m.potenzMatrixCreator(1);
+			System.out.println(m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("somethig's wrong");
+		}
+		
 	}
 
 	public void testRandom() {
@@ -233,7 +246,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		Test t = new Test();
-		t.testG1();
+		t.testMatrixInput();
 	}
 
 }

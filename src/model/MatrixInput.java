@@ -1,43 +1,37 @@
 package model;
 
-import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.File;
+import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 public class MatrixInput {
-	private File fl;
-	private Scanner sc;
-	public MatrixInput() {
-		fl = new File("C:\\Users\\peerh\\Desktop\\MAtric.txt");
+	private ArrayList<String[]> rowMatrix;
+
+	public MatrixInput(String pfad) throws IOException {
 		try {
-			sc = new Scanner(fl);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		rowMatrix = new ArrayList<String[]>();
+		BufferedReader br = new BufferedReader(new FileReader(pfad));
+		String zeile = br.readLine();
+		while(zeile != null) {
+			rowMatrix.add(zeile.split(","));
+			 zeile = br.readLine();
 		}
+		br.close();
+		} catch (IOException e ) {
+				throw e;
+				}
 	}
 
-	/*
-	 * Here I am trying to read the file
-	 */
-	public String read() {
-		String re = "";
-		while (sc.hasNextBigInteger() || sc.hasNextLine()) {
-			re = Integer.toString(sc.nextInt());
-		}
-		sc.close();
-		return re;
+	public int [][] getMatrix(){
+		int [][] matrix = new int[rowMatrix.size()][rowMatrix.size()];
+		for(int i = 0; i< matrix.length; i++)
+			for (int y = 0 ; y< matrix.length; y++)
+				matrix [i][y]= Integer.parseInt(rowMatrix.get(i)[y]);
+		return matrix;
+	}
+	public int rowMatrixLength() {
+		return rowMatrix.size();
 	}
 
-	/*
-	 * Here I am trying to see if the file had been already imported
-	 */
-	public String trFile() {
-		String trf = "";
-		if (fl.canRead()) {
-			trf = "it is working";
-		}
-		return trf;
-
-	}
 }
