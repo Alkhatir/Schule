@@ -1,7 +1,15 @@
 package model;
 
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.List;
 
 public class Matrix {
 	private int[][] m;
@@ -38,6 +46,10 @@ public class Matrix {
 		this.num = num;
 	}
 
+	public int[][] getM() {
+		return m;
+	}
+
 	@Override
 	public String toString() {
 		String str = "Adjazenzmatrix : " + "\n";
@@ -47,14 +59,14 @@ public class Matrix {
 				str += m[i][j] + " ";
 			}
 		}
-		str += "\n" + "\n" + "Potenzmatrix ist :" + "\n";
+		str += "\n" + "\n" + "Potenzmatrix ist : " + "\n";
 		for (int i = 0; i < num; i++) {
 			str += "\n";
 			for (int j = 0; j < num; j++) {
 				str += pm[i][j] + " ";
 			}
 		}
-		str += "\n" + "\n" + "Distanzmatrix ist :" + "\n";
+		str += "\n" + "\n" + "Distanzmatrix ist : " + "\n";
 		for (int i = 0; i < num; i++) {
 			str += "\n";
 			for (int j = 0; j < num; j++) {
@@ -190,7 +202,7 @@ public class Matrix {
 		for (int i = 0; i < num; i++)
 			if (max == exzentrizitaeten()[i])
 				durchmesser.add(i);
-		System.out.println("die/der Durchmesser ist/sind der Knote: " + durchmesser.toString());
+		System.out.println("die/der Durchmesser ist/sind der Knote : " + durchmesser.toString());
 		int min = Integer.MAX_VALUE;
 		for (int i : exzentrizitaeten())
 			if (min > i)
@@ -201,5 +213,98 @@ public class Matrix {
 				radius.add(i);
 		System.out.println("die/der Radius ist/sind der Knote : " + radius.toString());
 	}
+/*
+ * Diese Methode soll ein Komponent von der Natritze finden und diese zurückliefern.
+ * Ein Set wird für die Knoten initialisiert.
+ * mitVerbunden symbolisiert jeden Knote, der mit Anderen verbunden ist, sodass jede ArrayList ein Knote ist und 
+ * der Inhalt von Arraylist die daran hängenden Knoten ist.
+ * die Varianten 1 & 2 sind dafür, dass alle Knoten, die an einem Knote von SetKnoten anhängen, aufgerufen 
+ * und in der SetKnoten ab gespeichert werden.
+ */
+	public Set<Integer> verbundeneKnoten(int[][] komp) {
+		Set<Integer> setKnoten = new HashSet<Integer>();
+		ArrayList<ArrayList<Integer>> mitVerbunden = new ArrayList<ArrayList<Integer>>();
+		for (int i = 0; i < komp.length; i++)
+			mitVerbunden.add(new ArrayList<Integer>());
+		for (int i = 0; i < komp.length; i++)
+			for (int y = 0; y < komp.length; y++)
+				if (komp[i][y] == 1)
+					mitVerbunden.get(i).add(y);
+		setKnoten.addAll(mitVerbunden.get(0));
+		// --------------------------------Variante 1-----------------------------------------------------------
+		for (int i : setKnoten) 
+			setKnoten.addAll(mitVerbunden.get(i));
+		//---------------------------------Variante 2-----------------------------------------------------------
+//		try {
+//			boolean geaendert = false;
+//			while (!geaendert) {
+//				Iterator<Integer> itr = setKnoten.iterator();
+//				Set<Integer> setKnotenClone = setKnoten;
+//				while (itr.hasNext()) {
+//					setKnotenClone.addAll(mitVerbunden.get(itr.next()));
+//				}
+//				if (setKnotenClone.equals(setKnoten))
+//					geaendert = true;
+//				setKnoten = setKnotenClone;
+//			}
+//		} catch (ConcurrentModificationException e) {
+//			System.out.println(e.getMessage());
+//		}
+		//--------------------------------------------------------------------------------------------------------
+		return setKnoten;
+	}
+
+	public Set<Integer> artikulationen() {
+		Set<Integer> artikulationKn = new HashSet<Integer>();
+		Set<Integer> komp1 = verbundeneKnoten(m);
+		int[][] fakeM = m;
+		int n = 0;
+		while (n < num) {
+			for (int i = 0; i < num; i++) {
+				fakeM[n][i] = 0;
+				fakeM[i][n] = 0;
+			}
+			if (!komp1.containsAll(verbundeneKnoten(fakeM))) {
+				artikulationKn.add(n);
+			}
+			n++;
+		}
+		return artikulationKn;
+	}
+
+	public List<LinkedList<Integer>> komponenten() {
+		List<LinkedList<Integer>> knotengruppen = new ArrayList<LinkedList<Integer>>();
+
+		return knotengruppen;
+	}
+
+	LinkedList<Integer> komponent(int[][] matr) {
+		LinkedList<Integer> komp = new LinkedList<Integer>();
+		komp.addAll(verbundeneKnoten(matr));
+		return komp;
+	}
+//	public ArrayList<ArrayList<Integer>> conToVertix() {
+//		ArrayList<ArrayList<Integer>> komponenten = new ArrayList<ArrayList<Integer>>();
+//		for (int i = 0; i < num; i++)
+//			for (int y = 0; y < num; y++)
+//				if (m[i][y] == 1) {
+//					komponenten.get(i).add(new Integer(y));
+//				}
+//		return komponenten;
+//	}
+
+//	public ArrayList<ArrayList<Integer>> komponenten() {
+//		ArrayList<ArrayList<Integer>> komponenten = new ArrayList<ArrayList<Integer>>();
+//		boolean zusammenhaengend = false;
+//		for (int i = 0; i < num; i++)
+//			for (int y = 0; y < num; y++)
+//				if (conToVertix().get(i).get(y))
+//		for (int i = 0; i < num; i++)
+//			for (int y = 0; y < num; y++) {
+//				komponenten.add(conToVertix().get(i));
+//				
+//			}
+//		return komponenten;
+//	}
 
 }

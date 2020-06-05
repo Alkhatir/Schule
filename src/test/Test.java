@@ -17,9 +17,10 @@ public class Test {
 			m.distanceMatrixCreator();
 			m.potenzMatrixCreator(1);
 			System.out.println(m);
+			System.out.println(m.verbundeneKnoten(m.getM()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("somethig's wrong");
+			System.out.println(e.getMessage());
 		}
 		
 	}
