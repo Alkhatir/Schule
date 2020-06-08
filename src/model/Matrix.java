@@ -152,8 +152,8 @@ public class Matrix {
 					for (int y = 0; y < num; y++) {
 						inBetween2[i][y] = sum(inBetween1, i, y);
 					}
-					inBetween1 = inBetween2;
 				}
+				inBetween1 = inBetween2;
 			}
 		}
 		return inBetween1;
@@ -173,7 +173,7 @@ public class Matrix {
 			} else {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
-						if (distanceMatrixCreatorHelper(potential - 1)[i][y] >= potential && dm[i][y] == 0 && i != y) {
+						if (distanceMatrixCreatorHelper(potential)[i][y] >= potential && dm[i][y] == 0 && i != y) {
 							dm[i][y] = potential;
 						}
 			}
@@ -185,15 +185,19 @@ public class Matrix {
 
 	public int[] exzentrizitaeten() {
 		int[] l = new int[num];
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < num; i++) {
+			l[i] = 0;
 			for (int y = 0; y < num; y++)
-				l[i] += distanceMatrixCreator()[i][y];
+				if (l[i] < distanceMatrixCreator()[i][y])
+				l[i] = distanceMatrixCreator()[i][y];
+		}
 		return l;
 	}
 
-	public void showExzentrizitaeten() {
+	public String showExzentrizitaeten() {
+		String str = "";
 		for (int i = 0; i < num; i++)
-			System.out.println("Knote " + i + " hat die Exzentrizitaet : " + exzentrizitaeten()[i]);
+			str += "Knote " + i + " hat die Exzentrizitaet : " + exzentrizitaeten()[i] + "\n";
 		int max = Integer.MIN_VALUE;
 		for (int i : exzentrizitaeten())
 			if (max < i)
@@ -202,7 +206,7 @@ public class Matrix {
 		for (int i = 0; i < num; i++)
 			if (max == exzentrizitaeten()[i])
 				durchmesser.add(i);
-		System.out.println("die/der Durchmesser ist/sind der Knote : " + durchmesser.toString());
+		str += "die/der Durchmesser ist/sind der Knote : " + durchmesser.toString() + "\n";
 		int min = Integer.MAX_VALUE;
 		for (int i : exzentrizitaeten())
 			if (min > i)
@@ -211,16 +215,19 @@ public class Matrix {
 		for (int i = 0; i < num; i++)
 			if (min == exzentrizitaeten()[i])
 				radius.add(i);
-		System.out.println("die/der Radius ist/sind der Knote : " + radius.toString());
+		str += "die/der Radius ist/sind der Knote : " + radius.toString() + "\n";
+		return str;
 	}
-/*
- * Diese Methode soll ein Komponent von der Natritze finden und diese zurückliefern.
- * Ein Set wird für die Knoten initialisiert.
- * mitVerbunden symbolisiert jeden Knote, der mit Anderen verbunden ist, sodass jede ArrayList ein Knote ist und 
- * der Inhalt von Arraylist die daran hängenden Knoten ist.
- * die Varianten 1 & 2 sind dafür, dass alle Knoten, die an einem Knote von SetKnoten anhängen, aufgerufen 
- * und in der SetKnoten ab gespeichert werden.
- */
+
+	/*
+	 * Diese Methode soll ein Komponent von der Natritze finden und diese
+	 * zurückliefern. Ein Set wird für die Knoten initialisiert. mitVerbunden
+	 * symbolisiert jeden Knote, der mit Anderen verbunden ist, sodass jede
+	 * ArrayList ein Knote ist und der Inhalt von Arraylist die daran hängenden
+	 * Knoten ist. die Varianten 1 & 2 sind dafür, dass alle Knoten, die an einem
+	 * Knote von SetKnoten anhängen, aufgerufen und in der SetKnoten ab gespeichert
+	 * werden.
+	 */
 	public Set<Integer> verbundeneKnoten(int[][] komp) {
 		Set<Integer> setKnoten = new HashSet<Integer>();
 		ArrayList<ArrayList<Integer>> mitVerbunden = new ArrayList<ArrayList<Integer>>();
@@ -231,10 +238,13 @@ public class Matrix {
 				if (komp[i][y] == 1)
 					mitVerbunden.get(i).add(y);
 		setKnoten.addAll(mitVerbunden.get(0));
-		// --------------------------------Variante 1-----------------------------------------------------------
-		for (int i : setKnoten) 
+		Set<Integer> setKnotenClone = setKnoten;
+		// --------------------------------Variante
+		// 1-----------------------------------------------------------
+		for (int i : setKnotenClone)
 			setKnoten.addAll(mitVerbunden.get(i));
-		//---------------------------------Variante 2-----------------------------------------------------------
+		// ---------------------------------Variante
+		// 2-----------------------------------------------------------
 //		try {
 //			boolean geaendert = false;
 //			while (!geaendert) {
@@ -250,7 +260,7 @@ public class Matrix {
 //		} catch (ConcurrentModificationException e) {
 //			System.out.println(e.getMessage());
 //		}
-		//--------------------------------------------------------------------------------------------------------
+		// --------------------------------------------------------------------------------------------------------
 		return setKnoten;
 	}
 
@@ -292,6 +302,22 @@ public class Matrix {
 //				}
 //		return komponenten;
 //	}
+
+	public int[][] getDm() {
+		return dm;
+	}
+
+	public void setDm(int[][] dm) {
+		this.dm = dm;
+	}
+
+	public int[][] getPm() {
+		return pm;
+	}
+
+	public void setPm(int[][] pm) {
+		this.pm = pm;
+	}
 
 //	public ArrayList<ArrayList<Integer>> komponenten() {
 //		ArrayList<ArrayList<Integer>> komponenten = new ArrayList<ArrayList<Integer>>();

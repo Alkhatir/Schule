@@ -4,10 +4,25 @@ import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.File;
 
 public class MatrixInput {
 	private ArrayList<String[]> rowMatrix;
 
+	public MatrixInput(File matrix) throws IOException {
+		try {
+		rowMatrix = new ArrayList<String[]>();
+		BufferedReader br = new BufferedReader(new FileReader(matrix));
+		String zeile = br.readLine();
+		while(zeile != null) {
+			rowMatrix.add(zeile.split(","));
+			 zeile = br.readLine();
+		}
+		br.close();
+		} catch (IOException e ) {
+				throw e;
+				}
+	}
 	public MatrixInput(String pfad) throws IOException {
 		try {
 		rowMatrix = new ArrayList<String[]>();
