@@ -23,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
+
 public final class FileChooserExample extends Application {
 
 	private File matrixFile;
@@ -54,11 +55,13 @@ public final class FileChooserExample extends Application {
 					if (!potIn.getText().isEmpty())
 						try {
 							Integer.parseInt(potIn.getText());
-					matrixReader(matrixFile, Integer.parseInt(potIn.getText()));
-					}catch(Exception ex){
-						new Alert(Alert.AlertType.ERROR, "Wrong type! it hast to be an integer", ButtonType.OK).show();
-					}
-					else new Alert(Alert.AlertType.INFORMATION, "please write a number", ButtonType.OK).show();
+							matrixReader(matrixFile, Integer.parseInt(potIn.getText()));
+						} catch (Exception ex) {
+							new Alert(Alert.AlertType.ERROR, "Wrong type! it hast to be an integer", ButtonType.OK)
+									.show();
+						}
+					else
+						new Alert(Alert.AlertType.INFORMATION, "please write a number", ButtonType.OK).show();
 				else
 					new Alert(Alert.AlertType.INFORMATION, "please import the matrix first", ButtonType.OK).show();
 			}
@@ -66,7 +69,7 @@ public final class FileChooserExample extends Application {
 
 		mainPane = new BorderPane();
 		FlowPane topPane = new FlowPane();
-		topPane.getChildren().addAll(potIn,openButton, runButton);
+		topPane.getChildren().addAll(potIn, openButton, runButton);
 		mainPane.setTop(topPane);
 		topPane.setHgap(12.0);
 		topPane.setVgap(12.0);
@@ -89,7 +92,7 @@ public final class FileChooserExample extends Application {
 		Application.launch(args);
 	}
 
-	void matrixReader(File matrix,int c) {
+	void matrixReader(File matrix, int c) {
 		try {
 			MatrixInput mat = new MatrixInput(matrix);
 			Matrix m = new Matrix(mat.rowMatrixLength());
@@ -97,7 +100,7 @@ public final class FileChooserExample extends Application {
 				for (int y = 0; y < mat.rowMatrixLength(); y++)
 					m.fillMatrix(i, y, mat.getMatrix()[i][y]);
 			m.distanceMatrixCreator();
-			m.potenzMatrixCreator(c-1);
+			m.potenzMatrixCreator(c - 1);
 			System.out.println(m);
 			m.showExzentrizitaeten();
 			GridPane everyThing = new GridPane();
@@ -149,7 +152,14 @@ public final class FileChooserExample extends Application {
 			everyThing.add(distMatrix, 1, 2);
 			everyThing.setHgap(12.0);
 			everyThing.setVgap(12.0);
-			ScrollPane botPane = new ScrollPane(new Text(m.showExzentrizitaeten()));
+			String str = "\n";
+			for (int[] i : m.komponenten()) {
+				str += "Der Komponente " + m.komponenten().indexOf(i) + " sind die Knoten ";
+				for (int y = 0; y < i.length; y++)
+					str += "[" + i[y] + "]";
+				str += "\n";
+			}
+			ScrollPane botPane = new ScrollPane(new Text(m.showExzentrizitaeten() + str));
 			botPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 			botPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 			VBox box = new VBox();

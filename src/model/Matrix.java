@@ -2,6 +2,11 @@ package model;
 
 import java.util.Random;
 import java.util.Set;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -38,6 +43,51 @@ public class Matrix {
 		newPm = true;
 	}
 
+	// public ArrayList<ArrayList<Integer>> conToVertix() {
+	// ArrayList<ArrayList<Integer>> komponenten = new
+	// ArrayList<ArrayList<Integer>>();
+	// for (int i = 0; i < num; i++)
+	// for (int y = 0; y < num; y++)
+	// if (m[i][y] == 1) {
+	// komponenten.get(i).add(new Integer(y));
+	// }
+	// return komponenten;
+	// }
+
+	public void setDm(int[][] dm) {
+		this.dm = dm;
+	}
+
+	// public ArrayList<ArrayList<Integer>> conToVertix() {
+	// ArrayList<ArrayList<Integer>> komponenten = new
+	// ArrayList<ArrayList<Integer>>();
+	// for (int i = 0; i < num; i++)
+	// for (int y = 0; y < num; y++)
+	// if (m[i][y] == 1) {
+	// komponenten.get(i).add(new Integer(y));
+	// }
+	// return komponenten;
+	// }
+
+	// public ArrayList<ArrayList<Integer>> conToVertix() {
+	// ArrayList<ArrayList<Integer>> komponenten = new
+	// ArrayList<ArrayList<Integer>>();
+	// for (int i = 0; i < num; i++)
+	// for (int y = 0; y < num; y++)
+	// if (m[i][y] == 1) {
+	// komponenten.get(i).add(new Integer(y));
+	// }
+	// return komponenten;
+	// }
+
+	public void setPm(int[][] pm) {
+		this.pm = pm;
+	}
+
+	public int[][] getPm() {
+		return pm;
+	}
+
 	public int getNum() {
 		return num;
 	}
@@ -48,6 +98,21 @@ public class Matrix {
 
 	public int[][] getM() {
 		return m;
+	}
+
+	// public ArrayList<ArrayList<Integer>> conToVertix() {
+	// ArrayList<ArrayList<Integer>> komponenten = new
+	// ArrayList<ArrayList<Integer>>();
+	// for (int i = 0; i < num; i++)
+	// for (int y = 0; y < num; y++)
+	// if (m[i][y] == 1) {
+	// komponenten.get(i).add(new Integer(y));
+	// }
+	// return komponenten;
+	// }
+
+	public int[][] getDm() {
+		return dm;
 	}
 
 	@Override
@@ -189,7 +254,7 @@ public class Matrix {
 			l[i] = 0;
 			for (int y = 0; y < num; y++)
 				if (l[i] < distanceMatrixCreator()[i][y])
-				l[i] = distanceMatrixCreator()[i][y];
+					l[i] = distanceMatrixCreator()[i][y];
 		}
 		return l;
 	}
@@ -198,27 +263,33 @@ public class Matrix {
 		String str = "";
 		for (int i = 0; i < num; i++)
 			str += "Knote " + i + " hat die Exzentrizitaet : " + exzentrizitaeten()[i] + "\n";
-		int max = Integer.MIN_VALUE;
-		for (int i : exzentrizitaeten())
-			if (max < i)
-				max = i;
-		ArrayList<Integer> durchmesser = new ArrayList<Integer>();
+//		int max = Integer.MIN_VALUE;
+//		for (int i : exzentrizitaeten())
+//			if (max < i)
+//				max = i;
+		int durchmesser = Integer.MIN_VALUE;
 		for (int i = 0; i < num; i++)
-			if (max == exzentrizitaeten()[i])
-				durchmesser.add(i);
-		str += "die/der Durchmesser ist/sind der Knote : " + durchmesser.toString() + "\n";
-		int min = Integer.MAX_VALUE;
-		for (int i : exzentrizitaeten())
-			if (min > i)
-				min = i;
-		ArrayList<Integer> radius = new ArrayList<Integer>();
+			if (durchmesser < exzentrizitaeten()[i])
+				durchmesser = exzentrizitaeten()[i];
+		str += "der Durchmesser ist : " + durchmesser + "\n";
+//		int min = Integer.MAX_VALUE;
+//		for (int i : exzentrizitaeten())
+//			if (min > i)
+//				min = i;
+		int radius = Integer.MAX_VALUE;
 		for (int i = 0; i < num; i++)
-			if (min == exzentrizitaeten()[i])
-				radius.add(i);
-		str += "die/der Radius ist/sind der Knote : " + radius.toString() + "\n";
+			if (radius > exzentrizitaeten()[i])
+				radius = exzentrizitaeten()[i];
+		str += "der Radius ist : " + radius + "\n";
+		List<Integer> zentrum = new ArrayList<Integer>();
+		for (int i = 0; i < num; i++)
+			if (exzentrizitaeten()[i] == radius)
+				zentrum.add(i);
+		str += "Das Zentrum ist/sind der/die Knoten : " + zentrum.toString();
 		return str;
 	}
 
+//-------------------------------------------------------------------------------------------------
 	/*
 	 * Diese Methode soll ein Komponent von der Natritze finden und diese
 	 * zurückliefern. Ein Set wird für die Knoten initialisiert. mitVerbunden
@@ -230,19 +301,28 @@ public class Matrix {
 	 */
 	public Set<Integer> verbundeneKnoten(int[][] komp) {
 		Set<Integer> setKnoten = new HashSet<Integer>();
-		ArrayList<ArrayList<Integer>> mitVerbunden = new ArrayList<ArrayList<Integer>>();
-		for (int i = 0; i < komp.length; i++)
-			mitVerbunden.add(new ArrayList<Integer>());
-		for (int i = 0; i < komp.length; i++)
-			for (int y = 0; y < komp.length; y++)
-				if (komp[i][y] == 1)
-					mitVerbunden.get(i).add(y);
-		setKnoten.addAll(mitVerbunden.get(0));
-		Set<Integer> setKnotenClone = setKnoten;
+		try {
+			ArrayList<ArrayList<Integer>> mitVerbunden = new ArrayList<ArrayList<Integer>>();
+			for (int i = 0; i < komp.length; i++)
+				mitVerbunden.add(new ArrayList<Integer>());
+			for (int i = 0; i < komp.length; i++)
+				for (int y = 0; y < komp.length; y++)
+					if (komp[i][y] == 1)
+						mitVerbunden.get(i).add(y);
+			setKnoten.addAll(mitVerbunden.get(0));
+			for (int i = 0; i < komp.length; i++)
+				for (int y = 0; y < komp.length; y++)
+					if (mitVerbunden.get(i).contains(y) && setKnoten.contains(y))
+						setKnoten.addAll(mitVerbunden.get(y));
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,"set error"+e.getMessage(),ButtonType.OK);
+		}
+//		setKnoten.addAll(mitVerbunden.get(0));
+//		Set<Integer> setKnotenClone = setKnoten;
 		// --------------------------------Variante
 		// 1-----------------------------------------------------------
-		for (int i : setKnotenClone)
-			setKnoten.addAll(mitVerbunden.get(i));
+//		for (int i : setKnotenClone)
+//			setKnoten.addAll(mitVerbunden.get(i));
 		// ---------------------------------Variante
 		// 2-----------------------------------------------------------
 //		try {
@@ -264,6 +344,35 @@ public class Matrix {
 		return setKnoten;
 	}
 
+	public List<int[]> komponenten() {
+		
+		List<int[]> komp = new ArrayList<int[]>();;
+		try {
+			Set<Integer> set1 = verbundeneKnoten(m);
+			Set<Integer> set2 = set1;
+			boolean fertig = false;
+			int[][] fakeM = m;
+			while (!fertig) {
+				for (int i : set1)
+					for (int y : set1)
+						fakeM[i][y] = 0;
+				set1 = verbundeneKnoten(fakeM);
+				if (!set1.containsAll(set2)) {
+					int[] l = new int[set1.size()];
+					Iterator<Integer> iterator = set1.iterator();
+					for (int i = 0; i < l.length; i++)
+						l[i] = iterator.next();
+					komp.add(l);
+					set2 = set1;
+				} else
+					fertig = true;
+			}
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,"set error"+e.getMessage(),ButtonType.OK);
+		}
+		return komp;
+	}
+
 	public Set<Integer> artikulationen() {
 		Set<Integer> artikulationKn = new HashSet<Integer>();
 		Set<Integer> komp1 = verbundeneKnoten(m);
@@ -281,56 +390,4 @@ public class Matrix {
 		}
 		return artikulationKn;
 	}
-
-	public List<LinkedList<Integer>> komponenten() {
-		List<LinkedList<Integer>> knotengruppen = new ArrayList<LinkedList<Integer>>();
-
-		return knotengruppen;
-	}
-
-	LinkedList<Integer> komponent(int[][] matr) {
-		LinkedList<Integer> komp = new LinkedList<Integer>();
-		komp.addAll(verbundeneKnoten(matr));
-		return komp;
-	}
-//	public ArrayList<ArrayList<Integer>> conToVertix() {
-//		ArrayList<ArrayList<Integer>> komponenten = new ArrayList<ArrayList<Integer>>();
-//		for (int i = 0; i < num; i++)
-//			for (int y = 0; y < num; y++)
-//				if (m[i][y] == 1) {
-//					komponenten.get(i).add(new Integer(y));
-//				}
-//		return komponenten;
-//	}
-
-	public int[][] getDm() {
-		return dm;
-	}
-
-	public void setDm(int[][] dm) {
-		this.dm = dm;
-	}
-
-	public int[][] getPm() {
-		return pm;
-	}
-
-	public void setPm(int[][] pm) {
-		this.pm = pm;
-	}
-
-//	public ArrayList<ArrayList<Integer>> komponenten() {
-//		ArrayList<ArrayList<Integer>> komponenten = new ArrayList<ArrayList<Integer>>();
-//		boolean zusammenhaengend = false;
-//		for (int i = 0; i < num; i++)
-//			for (int y = 0; y < num; y++)
-//				if (conToVertix().get(i).get(y))
-//		for (int i = 0; i < num; i++)
-//			for (int y = 0; y < num; y++) {
-//				komponenten.add(conToVertix().get(i));
-//				
-//			}
-//		return komponenten;
-//	}
-
 }
