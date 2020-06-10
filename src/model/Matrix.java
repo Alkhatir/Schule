@@ -315,7 +315,7 @@ public class Matrix {
 					if (mitVerbunden.get(i).contains(y) && setKnoten.contains(y))
 						setKnoten.addAll(mitVerbunden.get(y));
 		} catch (Exception e) {
-			new Alert(AlertType.ERROR,"set error"+e.getMessage(),ButtonType.OK);
+			new Alert(AlertType.ERROR, "set error" + e.getMessage(), ButtonType.OK);
 		}
 //		setKnoten.addAll(mitVerbunden.get(0));
 //		Set<Integer> setKnotenClone = setKnoten;
@@ -345,8 +345,9 @@ public class Matrix {
 	}
 
 	public List<int[]> komponenten() {
-		
-		List<int[]> komp = new ArrayList<int[]>();;
+
+		List<int[]> komp = new ArrayList<int[]>();
+		;
 		try {
 			Set<Integer> set1 = verbundeneKnoten(m);
 			Set<Integer> set2 = set1;
@@ -355,8 +356,10 @@ public class Matrix {
 			while (!fertig) {
 				for (int i : set1)
 					for (int y : set1)
-						fakeM[i][y] = 0;
-				set1 = verbundeneKnoten(fakeM);
+						if (set1.size() != num) {
+							fakeM[i][y] = 0;
+							set1 = verbundeneKnoten(fakeM);
+						}
 				if (!set1.containsAll(set2)) {
 					int[] l = new int[set1.size()];
 					Iterator<Integer> iterator = set1.iterator();
@@ -364,11 +367,17 @@ public class Matrix {
 						l[i] = iterator.next();
 					komp.add(l);
 					set2 = set1;
-				} else
+				} else {
+					int[] l = new int[set1.size()];
+					Iterator<Integer> iterator = set1.iterator();
+					for (int i = 0; i < l.length; i++)
+						l[i] = iterator.next();
+					komp.add(l);
 					fertig = true;
+				}
 			}
 		} catch (Exception e) {
-			new Alert(AlertType.ERROR,"set error"+e.getMessage(),ButtonType.OK);
+			new Alert(AlertType.ERROR, "set error" + e.getMessage(), ButtonType.OK);
 		}
 		return komp;
 	}
