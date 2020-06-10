@@ -1,5 +1,7 @@
 package model;
 
+import java.util.*;
+import java.util.Collection;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
