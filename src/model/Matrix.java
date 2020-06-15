@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Matrix {
-	private int[][] m;
+	private final int[][] m;
 	private int[][] dm;
 	private int[][] pm;
 	private boolean newPm;
@@ -365,10 +365,10 @@ public class Matrix {
 			Set<Integer> set2 = new HashSet<>(set1);
 			boolean fertig = false;
 			boolean firstTime = true;
-			int[][] fakeM = matrix.clone();
-			// new int[matrix.length][matrix.length];
-//			for(int i = 0 ; i< matrix.length; i++)
-//				for(int y = 0; y< matrix.length; y++)
+			int[][] fakeM = new int[matrix.length][matrix.length];
+			for (int i = 0; i < matrix.length; i++)
+				for (int y = 0; y < matrix.length; y++)
+					fakeM[i][y] = matrix[i][y];
 
 			while (!fertig) {
 				if (set1.size() != num && firstTime) {
@@ -451,45 +451,50 @@ public class Matrix {
 		return komp;
 	}
 
-	public Set<Integer> artikulationen()
-	{
+	public Set<Integer> artikulationen() {
 		Set<Integer> artikulationKn = new HashSet<Integer>();
 		List<int[]> komp1 = komponenten(m);
-		int[][] fakeM = m.clone();
+		int[][] fakeM = new int[num][num];
+		for (int i = 0; i < num; i++)
+			for (int y = 0; y < num; y++)
+				fakeM[i][y] = m[i][y];
 		int n = 0;
-		while (n < num)
-		{
-			for (int i = 0; i < num; i++)
-			{
+		while (n < num) {
+			for (int i = 0; i < num; i++) {
 				fakeM[n][i] = 0;
 				fakeM[i][n] = 0;
 			}
-			if (komponenten(fakeM).size() - komp1.size() >= 2)
-			{
+			if (komponenten(fakeM).size() - komp1.size() >= 2) {
 				artikulationKn.add(n);
 			}
-			fakeM = m.clone();
+			for (int i = 0; i < num; i++)
+				for (int y = 0; y < num; y++)
+					fakeM[i][y] = m[i][y];
 			n++;
 		}
 		return artikulationKn;
 	}
 
-	public List<IntPairs> bruecken()
-	{
+	public List<IntPairs> bruecken() {
 		List<IntPairs> bruecke = new ArrayList<>();
 		List<int[]> komp1 = komponenten(m);
-		int[][] fakeM = m.clone();
+		int[][] fakeM = new int[num][num];
 		for (int i = 0; i < num; i++)
 			for (int y = 0; y < num; y++)
-			{
-				if (m[i][y] == 1)
-				{
+				fakeM[i][y] = m[i][y];
+		for (int i = 0; i < num; i++) {
+			for (int y = 0; y < num; y++) {
+				if (m[i][y] == 1) {
 					fakeM[i][y] = 0;
+					fakeM[y][i] = 0;
 					if (komponenten(fakeM).size() - komp1.size() >= 1)
 						bruecke.add(new IntPairs(i, y));
-					fakeM = m.clone();
+					fakeM[i][y] = 1;
+					fakeM[y][i] = 1;
 				}
 			}
+		}
+		
 		return bruecke;
 	}
 }

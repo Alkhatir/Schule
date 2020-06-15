@@ -102,7 +102,7 @@ public final class FileChooserExample extends Application {
 				for (int y = 0; y < mat.rowMatrixLength(); y++)
 					m.fillMatrix(i, y, mat.getMatrix()[i][y]);
 			m.distanceMatrixCreator();
-			//TODO potenzmatrixcreator!
+			// TODO potenzmatrixcreator!
 			m.potenzMatrixCreator(c - 1);
 			System.out.println(m);
 			m.showExzentrizitaeten();
@@ -157,12 +157,18 @@ public final class FileChooserExample extends Application {
 			everyThing.setVgap(12.0);
 			String str = "\n";
 			for (int[] i : m.komponenten(m.getM())) {
+				if (i.length >= 1)
 				str += "Der Komponente " + m.komponenten(m.getM()).indexOf(i) + " sind die Knoten ";
 				for (int y = 0; y < i.length; y++)
 					str += "[" + i[y] + "]";
 				str += "\n";
 			}
-			ScrollPane botPane = new ScrollPane(new Text(m.showExzentrizitaeten() + str));
+			String str1 = "\n";
+			for (IntPairs i : m.bruecken()) {
+				str1 += "Ein Brueck ist " + i.toString() + "\n";
+			}
+			ScrollPane botPane = new ScrollPane(
+					new Text(m.showExzentrizitaeten() + str + str1 +"die Artikulationen sind "+ m.artikulationen().toString()));
 			botPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 			botPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 			VBox box = new VBox();
