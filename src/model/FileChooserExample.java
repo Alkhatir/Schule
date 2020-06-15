@@ -102,6 +102,7 @@ public final class FileChooserExample extends Application {
 				for (int y = 0; y < mat.rowMatrixLength(); y++)
 					m.fillMatrix(i, y, mat.getMatrix()[i][y]);
 			m.distanceMatrixCreator();
+			//TODO potenzmatrixcreator!
 			m.potenzMatrixCreator(c - 1);
 			System.out.println(m);
 			m.showExzentrizitaeten();
@@ -155,8 +156,8 @@ public final class FileChooserExample extends Application {
 			everyThing.setHgap(12.0);
 			everyThing.setVgap(12.0);
 			String str = "\n";
-			for (int[] i : m.komponenten()) {
-				str += "Der Komponente " + m.komponenten().indexOf(i) + " sind die Knoten ";
+			for (int[] i : m.komponenten(m.getM())) {
+				str += "Der Komponente " + m.komponenten(m.getM()).indexOf(i) + " sind die Knoten ";
 				for (int y = 0; y < i.length; y++)
 					str += "[" + i[y] + "]";
 				str += "\n";

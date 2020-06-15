@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -169,10 +170,10 @@ public class Matrix {
 		return isZero;
 	}
 
-	public int sum(int[][] matrix, int x, int y) {
+	public int sum(int[][] matrix1, int[][] matrix2, int x, int y) {
 		int c = 0;
 		for (int i = 0; i < num; i++) {
-			c += matrix[i][y] * matrix[x][i];
+			c += matrix1[i][y] * matrix2[x][i];
 		}
 		return c;
 	}
@@ -183,17 +184,17 @@ public class Matrix {
 			if (newPm) {
 				for (int i = 0; i < num; i++) {
 					for (int y = 0; y < num; y++) {
-						pm[i][y] = sum(m, i, y);
+						pm[i][y] = sum(m, m, i, y);
 					}
 				}
 				newPm = false;
 			} else {
 				for (int i = 0; i < num; i++) {
 					for (int y = 0; y < num; y++) {
-						inBetweenArray[i][y] = sum(pm, i, y);
+						inBetweenArray[i][y] = sum(pm, m, i, y);
 					}
 				}
-				pm = inBetweenArray;
+				pm = Arrays.copyOf(inBetweenArray, num);
 			}
 		}
 		return inBetweenArray;
@@ -208,26 +209,27 @@ public class Matrix {
 			if (firstTime) {
 				for (int i = 0; i < num; i++) {
 					for (int y = 0; y < num; y++) {
-						inBetween1[i][y] = sum(m, i, y);
+						inBetween1[i][y] = sum(m, m, i, y);
 					}
 				}
 				firstTime = false;
 			} else {
 				for (int i = 0; i < num; i++) {
 					for (int y = 0; y < num; y++) {
-						inBetween2[i][y] = sum(inBetween1, i, y);
+						inBetween2[i][y] = sum(inBetween1, m, i, y);
 					}
 				}
-				inBetween1 = inBetween2;
+				for (int i = 0; i < num; i++)
+					for (int y = 0; y < num; y++)
+						inBetween1[i][y] = inBetween2[i][y];
 			}
 		}
 		return inBetween1;
 	}
 
 	public int[][] distanceMatrixCreator() {
-		int potential = 1;
 		boolean firstTime = true;
-		while (potential < 10 && isZero(dm)) {
+		for (int potential = 1; potential < 10 && isZero(dm); potential++) {
 			if (firstTime) {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
@@ -239,11 +241,12 @@ public class Matrix {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
 						if (distanceMatrixCreatorHelper(potential)[i][y] >= potential && dm[i][y] == 0 && i != y) {
-							dm[i][y] = potential;
+							if (potential > 2)
+								dm[i][y] = potential - 1;
+							else
+								dm[i][y] = potential;
 						}
 			}
-
-			potential++;
 		}
 		return dm;
 	}
@@ -299,25 +302,31 @@ public class Matrix {
 	 * Knote von SetKnoten anhängen, aufgerufen und in der SetKnoten ab gespeichert
 	 * werden.
 	 */
-	public Set<Integer> verbundeneKnoten(int[][] komp) {
+	public Set<Integer> verbundeneKnoten(int[][] matrix) {
 		Set<Integer> setKnoten = new HashSet<Integer>();
 		try {
 			ArrayList<ArrayList<Integer>> mitVerbunden = new ArrayList<ArrayList<Integer>>();
-			for (int i = 0; i < komp.length; i++)
+			for (int i = 0; i < matrix.length; i++)
 				mitVerbunden.add(new ArrayList<Integer>());
-			for (int i = 0; i < komp.length; i++)
-				for (int y = 0; y < komp.length; y++)
-					if (komp[i][y] == 1)
+			for (int i = 0; i < matrix.length; i++)
+				for (int y = 0; y < matrix.length; y++)
+					if (matrix[i][y] == 1)
 						mitVerbunden.get(i).add(y);
 			for (int i = 0; i < mitVerbunden.size(); i++)
 				if (!mitVerbunden.get(i).isEmpty()) {
 					setKnoten.addAll(mitVerbunden.get(i));
 					break;
 				}
-			for (int i = 0; i < komp.length; i++)
-				for (int y = 0; y < komp.length; y++)
-					if (mitVerbunden.get(i).contains(y) && setKnoten.contains(y))
-						setKnoten.addAll(mitVerbunden.get(y));
+			Set<Integer> setKnotenClone = new HashSet<>(setKnoten);
+			boolean fertig = false;
+			while (!fertig) {
+				for (int i : setKnotenClone)
+					setKnoten.addAll(mitVerbunden.get(i));
+				if (setKnotenClone.containsAll(setKnoten))
+					fertig = true;
+				for (int i : setKnoten)
+					setKnotenClone.add(i);
+			}
 		} catch (Exception e) {
 			new Alert(AlertType.ERROR, "set error" + e.getMessage(), ButtonType.OK).show();
 		}
@@ -348,15 +357,19 @@ public class Matrix {
 		return setKnoten;
 	}
 
-	public List<int[]> komponenten() {
+	public List<int[]> komponenten(int[][] matrix) {
 
 		List<int[]> komp = new ArrayList<int[]>();
 		try {
-			Set<Integer> set1 = verbundeneKnoten(m);
-			Set<Integer> set2 = set1;
+			Set<Integer> set1 = verbundeneKnoten(matrix);
+			Set<Integer> set2 = new HashSet<>(set1);
 			boolean fertig = false;
 			boolean firstTime = true;
-			int[][] fakeM = m;
+			int[][] fakeM = matrix.clone();
+			// new int[matrix.length][matrix.length];
+//			for(int i = 0 ; i< matrix.length; i++)
+//				for(int y = 0; y< matrix.length; y++)
+
 			while (!fertig) {
 				if (set1.size() != num && firstTime) {
 					for (int i : set1)
@@ -398,6 +411,38 @@ public class Matrix {
 						l[i] = iterator.next();
 					komp.add(l);
 					fertig = true;
+				}
+				boolean alleGefunden = false;
+				for (int[] i : komp)
+					Arrays.sort(i);
+				while (!alleGefunden) {
+					int c = 0;
+					for (int[] i : komp)
+						c += i.length;
+					int[] l = new int[1];
+					l[0] = 0;
+					if (c != matrix.length) {
+						for (int[] i : komp)
+							if (i.length >= 2)
+								for (int y = 1; y < i.length; y++) {
+									if (i[y] - i[y - 1] == 2 && l[0] == 0) {
+										l[0] = i[y - 1] + 1;
+									}
+									if (i[y] - i[y - 1] > 2 && l[0] == 0) {
+										int n = i[y];
+										for (int[] s : komp)
+											if (s.length >= 2)
+												for (int x = 0; x < s.length; x++)
+													if (n - s[x] == 2 && l[0] == 0) {
+														l[0] = n - 1;
+													}
+									}
+								}
+						komp.add(Arrays.copyOf(l, 1));
+						l[0] = 0;
+					} else {
+						alleGefunden = true;
+					}
 				}
 			}
 		} catch (Exception e) {
