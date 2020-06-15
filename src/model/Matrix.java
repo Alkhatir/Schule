@@ -451,21 +451,45 @@ public class Matrix {
 		return komp;
 	}
 
-	public Set<Integer> artikulationen() {
+	public Set<Integer> artikulationen()
+	{
 		Set<Integer> artikulationKn = new HashSet<Integer>();
-		Set<Integer> komp1 = verbundeneKnoten(m);
-		int[][] fakeM = m;
+		List<int[]> komp1 = komponenten(m);
+		int[][] fakeM = m.clone();
 		int n = 0;
-		while (n < num) {
-			for (int i = 0; i < num; i++) {
+		while (n < num)
+		{
+			for (int i = 0; i < num; i++)
+			{
 				fakeM[n][i] = 0;
 				fakeM[i][n] = 0;
 			}
-			if (!komp1.containsAll(verbundeneKnoten(fakeM))) {
+			if (komponenten(fakeM).size() - komp1.size() >= 2)
+			{
 				artikulationKn.add(n);
 			}
+			fakeM = m.clone();
 			n++;
 		}
 		return artikulationKn;
+	}
+
+	public List<IntPairs> bruecken()
+	{
+		List<IntPairs> bruecke = new ArrayList<>();
+		List<int[]> komp1 = komponenten(m);
+		int[][] fakeM = m.clone();
+		for (int i = 0; i < num; i++)
+			for (int y = 0; y < num; y++)
+			{
+				if (m[i][y] == 1)
+				{
+					fakeM[i][y] = 0;
+					if (komponenten(fakeM).size() - komp1.size() >= 1)
+						bruecke.add(new IntPairs(i, y));
+					fakeM = m.clone();
+				}
+			}
+		return bruecke;
 	}
 }
