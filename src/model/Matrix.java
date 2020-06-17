@@ -283,6 +283,7 @@ public class Matrix {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
 						if (distanceMatrixCreatorHelper(potenz)[i][y] >= potenz && dm[i][y] == 0 && i != y) {
+							// DAS UNTEN IST NICHT LOGISCH !!!!!!!!!!!!!!!!!!!!!!
 							if (potenz > 2)
 								dm[i][y] = potenz - 1;
 							else
