@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"model","l":"CalculatorGUI"},{"p":"model","l":"IntPairs"},{"p":"model","l":"Matrix"},{"p":"model","l":"MatrixInput"}]

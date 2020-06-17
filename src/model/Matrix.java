@@ -9,13 +9,15 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 import java.util.List;
+
+/**
+ * 
+ * @author Peer Hanna
+ *
+ */
 
 public class Matrix {
 	private final int[][] m;
@@ -25,6 +27,9 @@ public class Matrix {
 	private int num;
 	private Random rand;
 
+	/**
+	 * Erzeugt ein Matrix Objekt mit einer Adjazenzmatrix nach dem Zufallsprinzip
+	 */
 	public Matrix() {
 		num = 9;
 		dm = new int[num][num];
@@ -35,6 +40,12 @@ public class Matrix {
 
 	}
 
+	/**
+	 * Erzeugt ein Matrix Objekt nach einer bestimmten Länge
+	 * 
+	 * @param num ist die Länge der Matrize
+	 */
+
 	public Matrix(int num) {
 		m = new int[num][num];
 		dm = new int[num][num];
@@ -44,78 +55,55 @@ public class Matrix {
 		newPm = true;
 	}
 
-	// public ArrayList<ArrayList<Integer>> conToVertix() {
-	// ArrayList<ArrayList<Integer>> komponenten = new
-	// ArrayList<ArrayList<Integer>>();
-	// for (int i = 0; i < num; i++)
-	// for (int y = 0; y < num; y++)
-	// if (m[i][y] == 1) {
-	// komponenten.get(i).add(new Integer(y));
-	// }
-	// return komponenten;
-	// }
-
-	public void setDm(int[][] dm) {
-		this.dm = dm;
-	}
-
-	// public ArrayList<ArrayList<Integer>> conToVertix() {
-	// ArrayList<ArrayList<Integer>> komponenten = new
-	// ArrayList<ArrayList<Integer>>();
-	// for (int i = 0; i < num; i++)
-	// for (int y = 0; y < num; y++)
-	// if (m[i][y] == 1) {
-	// komponenten.get(i).add(new Integer(y));
-	// }
-	// return komponenten;
-	// }
-
-	// public ArrayList<ArrayList<Integer>> conToVertix() {
-	// ArrayList<ArrayList<Integer>> komponenten = new
-	// ArrayList<ArrayList<Integer>>();
-	// for (int i = 0; i < num; i++)
-	// for (int y = 0; y < num; y++)
-	// if (m[i][y] == 1) {
-	// komponenten.get(i).add(new Integer(y));
-	// }
-	// return komponenten;
-	// }
-
-	public void setPm(int[][] pm) {
-		this.pm = pm;
-	}
-
+	/**
+	 * liefert die Potenzmatrix zurück
+	 * 
+	 * @return ein zweidimensionale Array
+	 */
 	public int[][] getPm() {
 		return pm;
 	}
 
+	/**
+	 * liefert die Länge der Matritze
+	 * 
+	 * @return int
+	 */
 	public int getNum() {
 		return num;
 	}
 
+	/**
+	 * setzt die Länge der Matrize
+	 * 
+	 * @param num
+	 */
 	public void setNum(int num) {
 		this.num = num;
 	}
 
+	/**
+	 * Liefert die Adajazenzmatrix zurück
+	 * 
+	 * @return ein zweidimensionale Array
+	 */
 	public int[][] getM() {
 		return m;
 	}
 
-	// public ArrayList<ArrayList<Integer>> conToVertix() {
-	// ArrayList<ArrayList<Integer>> komponenten = new
-	// ArrayList<ArrayList<Integer>>();
-	// for (int i = 0; i < num; i++)
-	// for (int y = 0; y < num; y++)
-	// if (m[i][y] == 1) {
-	// komponenten.get(i).add(new Integer(y));
-	// }
-	// return komponenten;
-	// }
+	/**
+	 * Liefert die Distanzmatrix zurück
+	 * 
+	 * @return ein zweidimensionale Array
+	 */
 
 	public int[][] getDm() {
 		return dm;
 	}
 
+	/**
+	 * hier werden die Adjanzenzmatrix, die Potenzmatrix und die Distanzmatrix
+	 */
 	@Override
 	public String toString() {
 		String str = "Adjazenzmatrix : " + "\n";
@@ -142,6 +130,9 @@ public class Matrix {
 		return str;
 	}
 
+	/**
+	 * Eine Methode füllt die Ajatzenzmatrix nach dem Zufallsprinzip ab
+	 */
 	public void randomFillMatrix() {
 		for (int i = 0; i < num; i++) {
 			for (int j = i + 1; j < num; j++) {
@@ -157,11 +148,25 @@ public class Matrix {
 		}
 	}
 
+	/**
+	 * Eine Methode füllt die Ajatzenzmatrix ab
+	 * 
+	 * @param x ist die Spalte
+	 * @param y ist die Zeile
+	 * @param z ist der Wert (1 , 0)
+	 */
 	public void fillMatrix(int x, int y, int z) {
 		m[x][y] = z;
 	}
 
-	public boolean isZero(int[][] matrix) {
+	/**
+	 * Eine Methode liefert TRUE zurück, wenn eine Matrize eine Null nicht in der
+	 * Hauptdiagonale hat.
+	 * 
+	 * @param matrix
+	 * @return True oder False
+	 */
+	public boolean hasZero(int[][] matrix) {
 		boolean isZero = false;
 		for (int i = 0; i < num && !isZero; i++)
 			for (int y = 0; y < num && !isZero; y++)
@@ -170,6 +175,16 @@ public class Matrix {
 		return isZero;
 	}
 
+	/**
+	 * Eine Methode berechnet das Podukt aus einer Zeile von Matrix1 und einer
+	 * Spalte von Matrix2
+	 * 
+	 * @param matrix1
+	 * @param matrix2
+	 * @param x       ist die Zeile von Matrix2
+	 * @param y       ist die Spalte von Matrix1
+	 * @return das Produkt
+	 */
 	public int sum(int[][] matrix1, int[][] matrix2, int x, int y) {
 		int c = 0;
 		for (int i = 0; i < num; i++) {
@@ -177,6 +192,13 @@ public class Matrix {
 		}
 		return c;
 	}
+
+	/**
+	 * Eine Methode rechnet die Potenzmatrix mit Hilfe der sum Methode
+	 * 
+	 * @param potenz
+	 * @return ein zweidimensionale Array
+	 */
 
 	public int[][] potenzMatrixCreator(int potenz) {
 		int[][] inBetweenArray = new int[num][num];
@@ -201,6 +223,12 @@ public class Matrix {
 
 	}
 
+	/**
+	 * eine Methode rechnet die Potenzmatrix nach der distanceMatrixCreator Methode.
+	 * 
+	 * @param potenz
+	 * @return ein zweidimensionale Array
+	 */
 	public int[][] distanceMatrixCreatorHelper(int potenz) {
 		int[][] inBetween1 = new int[num][num];
 		int[][] inBetween2 = new int[num][num];
@@ -227,30 +255,47 @@ public class Matrix {
 		return inBetween1;
 	}
 
+	/**
+	 * eine Methode rechnet die Distanzmatrix aus der Adjatzenzmatrix mit Hilfe der
+	 * distanceMatrixCreatorHelper Methode. Zuerste werden alle Einser in der
+	 * Adjatzentmatrix übernommen. Dann wird die Potenz um Eins erhöht und mit
+	 * dieser wird der Potenzmatrix ausgerechnet. Die Distanzmatrix wird den Wert
+	 * der Potenz übernehmen nur dann, wenn der entsprechende Nuller in der
+	 * Distanzmatrix einen neuen Wert in der Potenzmatrix beträgt.
+	 * 
+	 * @return ein zweidimensionale Array
+	 */
+
 	public int[][] distanceMatrixCreator() {
 		boolean firstTime = true;
-		for (int potential = 1; potential < 10 && isZero(dm); potential++) {
+		for (int potenz = 1; potenz < 10 && hasZero(dm); potenz++) {
 			if (firstTime) {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
-						if (m[i][y] >= potential && i != y) {
-							dm[i][y] = potential;
+						if (m[i][y] >= potenz && i != y) {
+							dm[i][y] = potenz;
 						}
 				firstTime = false;
 			} else {
 				for (int i = 0; i < num; i++)
 					for (int y = 0; y < num; y++)
-						if (distanceMatrixCreatorHelper(potential)[i][y] >= potential && dm[i][y] == 0 && i != y) {
-							if (potential > 2)
-								dm[i][y] = potential - 1;
+						if (distanceMatrixCreatorHelper(potenz)[i][y] >= potenz && dm[i][y] == 0 && i != y) {
+							if (potenz > 2)
+								dm[i][y] = potenz - 1;
 							else
-								dm[i][y] = potential;
+								dm[i][y] = potenz;
 						}
 			}
 		}
 		return dm;
 	}
 
+	/**
+	 * eine Methode rechnet die Exzentrizitäten aller Knoten aus der Distanzmatrix
+	 * aus.
+	 * 
+	 * @return int[], wobei das Index der Knote ist.
+	 */
 	public int[] exzentrizitaeten() {
 		int[] l = new int[num];
 		for (int i = 0; i < num; i++) {
@@ -262,23 +307,22 @@ public class Matrix {
 		return l;
 	}
 
+	/**
+	 * eine Methode rechnet den Durchmesser, den Radius und das Zentrum mit Hilfe
+	 * der exzentrizitaeten Methode aus und wirft diese und die Exzentrizitäten
+	 * aller Knoten in ein String hinein
+	 * 
+	 * @return String
+	 */
 	public String showExzentrizitaeten() {
 		String str = "";
 		for (int i = 0; i < num; i++)
 			str += "Knote " + i + " hat die Exzentrizitaet : " + exzentrizitaeten()[i] + "\n";
-//		int max = Integer.MIN_VALUE;
-//		for (int i : exzentrizitaeten())
-//			if (max < i)
-//				max = i;
 		int durchmesser = Integer.MIN_VALUE;
 		for (int i = 0; i < num; i++)
 			if (durchmesser < exzentrizitaeten()[i])
 				durchmesser = exzentrizitaeten()[i];
 		str += "der Durchmesser ist : " + durchmesser + "\n";
-//		int min = Integer.MAX_VALUE;
-//		for (int i : exzentrizitaeten())
-//			if (min > i)
-//				min = i;
 		int radius = Integer.MAX_VALUE;
 		for (int i = 0; i < num; i++)
 			if (radius > exzentrizitaeten()[i])
@@ -292,16 +336,14 @@ public class Matrix {
 		return str;
 	}
 
-//-------------------------------------------------------------------------------------------------
-	/*
-	 * Diese Methode soll ein Komponent von der Natritze finden und diese
-	 * zurückliefern. Ein Set wird für die Knoten initialisiert. mitVerbunden
-	 * symbolisiert jeden Knote, der mit Anderen verbunden ist, sodass jede
-	 * ArrayList ein Knote ist und der Inhalt von Arraylist die daran hängenden
-	 * Knoten ist. die Varianten 1 & 2 sind dafür, dass alle Knoten, die an einem
-	 * Knote von SetKnoten anhängen, aufgerufen und in der SetKnoten ab gespeichert
-	 * werden.
+	/**
+	 * eine Methode leifert eine Set von Integers zurück, die eine Menge von Knoten,
+	 * die miteinander verbunden sind, enhält.
+	 * 
+	 * @param matrix ist ein zweidimensionale Array
+	 * @return eine Set von Konten
 	 */
+
 	public Set<Integer> verbundeneKnoten(int[][] matrix) {
 		Set<Integer> setKnoten = new HashSet<Integer>();
 		try {
@@ -330,33 +372,19 @@ public class Matrix {
 		} catch (Exception e) {
 			new Alert(AlertType.ERROR, "set error" + e.getMessage(), ButtonType.OK).show();
 		}
-//		setKnoten.addAll(mitVerbunden.get(0));
-//		Set<Integer> setKnotenClone = setKnoten;
-		// --------------------------------Variante
-		// 1-----------------------------------------------------------
-//		for (int i : setKnotenClone)
-//			setKnoten.addAll(mitVerbunden.get(i));
-		// ---------------------------------Variante
-		// 2-----------------------------------------------------------
-//		try {
-//			boolean geaendert = false;
-//			while (!geaendert) {
-//				Iterator<Integer> itr = setKnoten.iterator();
-//				Set<Integer> setKnotenClone = setKnoten;
-//				while (itr.hasNext()) {
-//					setKnotenClone.addAll(mitVerbunden.get(itr.next()));
-//				}
-//				if (setKnotenClone.equals(setKnoten))
-//					geaendert = true;
-//				setKnoten = setKnotenClone;
-//			}
-//		} catch (ConcurrentModificationException e) {
-//			System.out.println(e.getMessage());
-//		}
-		// --------------------------------------------------------------------------------------------------------
 		return setKnoten;
 	}
 
+	/**
+	 * eine Methode liefert alle Komponenten in der Matrize mit Hilfe der
+	 * verbundeneKnoten Methode zurück, sodass entweder ein Komponente im Fall vom
+	 * zusammenhängenden Graph oder zwei Komponenten rausgefunden und von der
+	 * übernommenen Matrize gelöscht werden, um den nächsten Kompente durch die
+	 * verbundeneKnoten Methode rauszufinden ...usw
+	 * 
+	 * @param matrix ist ein zweidimensionale Array
+	 * @return Liste vom int[], wobei int[] der Komponente ist
+	 */
 	public List<int[]> komponenten(int[][] matrix) {
 
 		List<int[]> komp = new ArrayList<int[]>();
@@ -375,7 +403,6 @@ public class Matrix {
 					for (int i : set1)
 						for (int y : set1)
 							fakeM[i][y] = 0;
-//					set2 = set1;
 				} else {
 					for (int i : set1)
 						for (int y : set1)
@@ -451,6 +478,13 @@ public class Matrix {
 		return komp;
 	}
 
+	/**
+	 * eine Methode liefert die Artikulationen zurück, die dadurch ausgesucht
+	 * werden, dass ein Konte entfernt und überprüft wird, ob ein neuer Komponente
+	 * erzeugt wird.
+	 * 
+	 * @return die Artikulationen in Form einer Set Collection von Integers
+	 */
 	public Set<Integer> artikulationen() {
 		Set<Integer> artikulationKn = new HashSet<Integer>();
 		List<int[]> komp1 = komponenten(m);
@@ -475,8 +509,16 @@ public class Matrix {
 		return artikulationKn;
 	}
 
+	/**
+	 * eine Methode liefert die Brücken zurück, die dadurch ausgesucht werden, dass
+	 * eine Kante entfernt und überprüft wird, ob ein neuer Komponente erzeugt wird.
+	 * Es könnte die selbe Kante zwei mals in der Liste wegen der Reihenfolge von
+	 * den Knoten in IntPairs geben.
+	 * 
+	 * @return eine Liste von IntPairs
+	 */
 	public List<IntPairs> bruecken() {
-		List<IntPairs> bruecke = new ArrayList<>();
+		List<IntPairs> bruecken = new ArrayList<>();
 		List<int[]> komp1 = komponenten(m);
 		int[][] fakeM = new int[num][num];
 		for (int i = 0; i < num; i++)
@@ -488,13 +530,30 @@ public class Matrix {
 					fakeM[i][y] = 0;
 					fakeM[y][i] = 0;
 					if (komponenten(fakeM).size() - komp1.size() >= 1)
-						bruecke.add(new IntPairs(i, y));
+						bruecken.add(new IntPairs(i, y));
 					fakeM[i][y] = 1;
 					fakeM[y][i] = 1;
 				}
 			}
 		}
-		
-		return bruecke;
+//		bruecke = noDuplicate(bruecke);
+		return bruecken;
 	}
+
+//	public List<IntPairs> noDuplicate(List<IntPairs> lip) {
+//		boolean hasDuplicate = true;
+//		List<IntPairs> newBruecke = new ArrayList<>(lip);
+//		int n = 0;
+//		while (hasDuplicate) {
+//			IntPairs ip = lip.get(n);
+//			for (int i = 0; i < lip.size(); i++) {
+//				if (lip.get(i).contains(ip.getY(), ip.getX())) {
+//					newBruecke.remove(i);
+//				}
+//			}
+//			n++;
+//		}
+//
+//		return newBruecke;
+//	}
 }

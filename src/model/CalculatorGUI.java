@@ -1,7 +1,5 @@
 package model;
 
-import java.util.*;
-import java.util.Collection;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
@@ -26,7 +24,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
 
-public final class FileChooserExample extends Application {
+/**
+ * 
+ * @author Peer Hanna
+ *
+ */
+public final class CalculatorGUI extends Application {
 
 	private File matrixFile;
 	private BorderPane mainPane;
@@ -76,17 +79,8 @@ public final class FileChooserExample extends Application {
 		topPane.setHgap(12.0);
 		topPane.setVgap(12.0);
 		topPane.setPadding(new Insets(12.0));
-//		GridPane.setConstraints(openButton, 0, 0);
-//		GridPane.setConstraints(runButton, 1, 0);
-//		inputGridPane.setHgap(6);
-//		inputGridPane.setVgap(6);
-//		inputGridPane.getChildren().addAll(openButton, runButton);
 
-//		final Pane rootGroup = new VBox(12);
-//		rootGroup.getChildren().addAll(mainPane);
-//		rootGroup.setPadding(new Insets(12, 12, 12, 12));
-
-		stage.setScene(new Scene(mainPane, 500.0, 950.0));
+		stage.setScene(new Scene(mainPane, 800.0, 950.0));
 		stage.show();
 	}
 
@@ -102,7 +96,6 @@ public final class FileChooserExample extends Application {
 				for (int y = 0; y < mat.rowMatrixLength(); y++)
 					m.fillMatrix(i, y, mat.getMatrix()[i][y]);
 			m.distanceMatrixCreator();
-			// TODO potenzmatrixcreator!
 			m.potenzMatrixCreator(c - 1);
 			System.out.println(m);
 			m.showExzentrizitaeten();
@@ -158,7 +151,7 @@ public final class FileChooserExample extends Application {
 			String str = "\n";
 			for (int[] i : m.komponenten(m.getM())) {
 				if (i.length >= 1)
-				str += "Der Komponente " + m.komponenten(m.getM()).indexOf(i) + " sind die Knoten ";
+					str += "Der Komponente " + m.komponenten(m.getM()).indexOf(i) + " sind die Knoten ";
 				for (int y = 0; y < i.length; y++)
 					str += "[" + i[y] + "]";
 				str += "\n";
@@ -167,19 +160,16 @@ public final class FileChooserExample extends Application {
 			for (IntPairs i : m.bruecken()) {
 				str1 += "Ein Brueck ist " + i.toString() + "\n";
 			}
-			ScrollPane botPane = new ScrollPane(
-					new Text(m.showExzentrizitaeten() + str + str1 +"die Artikulationen sind "+ m.artikulationen().toString()));
+			ScrollPane botPane = new ScrollPane(new Text(m.showExzentrizitaeten() + str + str1
+					+ "die Artikulationen sind " + m.artikulationen().toString()));
 			botPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 			botPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 			VBox box = new VBox();
 			box.getChildren().add(botPane);
 			VBox.setVgrow(botPane, Priority.ALWAYS);
-			botPane.setMaxSize(500.0, 100.0);
-			mainPane.setBottom(box);
-//			everyThing.getChildren().addAll(new TextField("Adjazenzmatrix ist "), adjMatrix,
-//					new TextField("Potenzmatrix ist "), potMatrix, new TextField("Distanzmatrix ist "), distMatrix);
+			botPane.setMaxSize(500.0, 500.0);
+			mainPane.setRight(box);
 			mainPane.setCenter(everyThing);
-//			System.out.println(m.verbundeneKnoten(m.getM()));
 		} catch (IOException e) {
 			new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK).show();
 		}
