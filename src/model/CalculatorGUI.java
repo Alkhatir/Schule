@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
 
 /**
+ * diese Klasse erstellt ein Benuetzerueberflaeche.
  * 
  * @author Peer Hanna
  *

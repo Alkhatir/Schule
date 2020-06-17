@@ -21,7 +21,7 @@ public class IntPairs {
 	}
 
 	/**
-	 * liefert TRUE zurueck, wenn eine Kante hat die selbe Knoten wie diese
+	 * liefert TRUE zurueck, wenn eine Kante die selbe Knoten hat wie diese
 	 * 
 	 * @param x ist ein Konte
 	 * @param y ist ein Knote

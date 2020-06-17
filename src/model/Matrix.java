@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * ist eine Klasse, die eine Adjatzenzmatrix uebernimmt, rechnet daraus die
+ * Potenzmatrix und die Distanzmatrix und findet alle Komponenten, Bruecken und
+ * Artikulationen
  * 
  * @author Peer Hanna
  *
@@ -337,8 +340,8 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode leifert eine Set von Integers zurueck, die eine Menge von Knoten,
-	 * die miteinander verbunden sind, enhaelt.
+	 * eine Methode leifert eine Set von Integers zurueck, die eine Menge von
+	 * Knoten, die miteinander verbunden sind, enhaelt.
 	 * 
 	 * @param matrix ist ein zweidimensionale Array
 	 * @return eine Set von Konten
@@ -510,10 +513,10 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode liefert die Bruecken zurueck, die dadurch ausgesucht werden, dass
-	 * eine Kante entfernt und ueberprueft wird, ob ein neuer Komponente erzeugt wird.
-	 * Es koennte die selbe Kante zwei mals in der Liste wegen der Reihenfolge von
-	 * den Knoten in IntPairs geben.
+	 * eine Methode liefert die Bruecken zurueck, die dadurch ausgesucht werden,
+	 * dass eine Kante entfernt und ueberprueft wird, ob ein neuer Komponente
+	 * erzeugt wird. Es koennte die selbe Kante zwei mals in der Liste wegen der
+	 * Reihenfolge von den Knoten in IntPairs geben.
 	 * 
 	 * @return eine Liste von IntPairs
 	 */
