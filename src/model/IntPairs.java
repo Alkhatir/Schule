@@ -21,7 +21,7 @@ public class IntPairs {
 	}
 
 	/**
-	 * liefert TRUE zurück, wenn eine Kante hat die selbe Knoten wie diese
+	 * liefert TRUE zurueck, wenn eine Kante hat die selbe Knoten wie diese
 	 * 
 	 * @param x ist ein Konte
 	 * @param y ist ein Knote
@@ -35,7 +35,7 @@ public class IntPairs {
 	}
 
 	/**
-	 * liefert ein String mit den Knoten zurück
+	 * liefert ein String mit den Knoten zurueck
 	 */
 	@Override
 	public String toString() {
@@ -43,7 +43,7 @@ public class IntPairs {
 	}
 
 	/**
-	 * liefert den Knoten X zurück
+	 * liefert den Knoten X zurueck
 	 * 
 	 * @return x
 	 */
@@ -53,7 +53,7 @@ public class IntPairs {
 	}
 
 	/**
-	 * liefert den Knoten Y zurück
+	 * liefert den Knoten Y zurueck
 	 * 
 	 * @return
 	 */

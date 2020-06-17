@@ -16,7 +16,7 @@ public class MatrixInput {
 	private ArrayList<String[]> rowMatrix;
 
 	/**
-	 * Ein MatrixInput Objekt wird durch die übernommene CSV Datei erzeugt
+	 * Ein MatrixInput Objekt wird durch die uebernommene CSV Datei erzeugt
 	 * 
 	 * @param matrix ist die CSV Datei
 	 * @throws IOException
@@ -74,7 +74,7 @@ public class MatrixInput {
 	}
 
 	/**
-	 * Liefert die Länge der Matrix bzw. die Anzahl der Knoten im Graph
+	 * Liefert die Laenge der Matrix bzw. die Anzahl der Knoten im Graph
 	 * 
 	 * @return int
 	 */

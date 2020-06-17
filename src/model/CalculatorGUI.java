@@ -88,6 +88,13 @@ public final class CalculatorGUI extends Application {
 		Application.launch(args);
 	}
 
+	/**
+	 * diese Mothode wird die impotierte CSV Datei und die Potenz uebernehmen
+	 * 
+	 * @param matrix ist die CSV Datei
+	 * @param c      ist die potenz
+	 */
+
 	void matrixReader(File matrix, int c) {
 		try {
 			MatrixInput mat = new MatrixInput(matrix);

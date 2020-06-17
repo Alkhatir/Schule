@@ -41,9 +41,9 @@ public class Matrix {
 	}
 
 	/**
-	 * Erzeugt ein Matrix Objekt nach einer bestimmten Länge
+	 * Erzeugt ein Matrix Objekt nach einer bestimmten Laenge
 	 * 
-	 * @param num ist die Länge der Matrize
+	 * @param num ist die Laenge der Matrize
 	 */
 
 	public Matrix(int num) {
@@ -56,7 +56,7 @@ public class Matrix {
 	}
 
 	/**
-	 * liefert die Potenzmatrix zurück
+	 * liefert die Potenzmatrix zurueck
 	 * 
 	 * @return ein zweidimensionale Array
 	 */
@@ -65,7 +65,7 @@ public class Matrix {
 	}
 
 	/**
-	 * liefert die Länge der Matritze
+	 * liefert die Laenge der Matritze
 	 * 
 	 * @return int
 	 */
@@ -74,7 +74,7 @@ public class Matrix {
 	}
 
 	/**
-	 * setzt die Länge der Matrize
+	 * setzt die Laenge der Matrize
 	 * 
 	 * @param num
 	 */
@@ -83,7 +83,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Liefert die Adajazenzmatrix zurück
+	 * Liefert die Adajazenzmatrix zurueck
 	 * 
 	 * @return ein zweidimensionale Array
 	 */
@@ -92,7 +92,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Liefert die Distanzmatrix zurück
+	 * Liefert die Distanzmatrix zurueck
 	 * 
 	 * @return ein zweidimensionale Array
 	 */
@@ -131,7 +131,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Eine Methode füllt die Ajatzenzmatrix nach dem Zufallsprinzip ab
+	 * Eine Methode fuellt die Ajatzenzmatrix nach dem Zufallsprinzip ab
 	 */
 	public void randomFillMatrix() {
 		for (int i = 0; i < num; i++) {
@@ -149,7 +149,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Eine Methode füllt die Ajatzenzmatrix ab
+	 * Eine Methode fuellt die Ajatzenzmatrix ab
 	 * 
 	 * @param x ist die Spalte
 	 * @param y ist die Zeile
@@ -160,7 +160,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Eine Methode liefert TRUE zurück, wenn eine Matrize eine Null nicht in der
+	 * Eine Methode liefert TRUE zurueck, wenn eine Matrize eine Null nicht in der
 	 * Hauptdiagonale hat.
 	 * 
 	 * @param matrix
@@ -257,11 +257,11 @@ public class Matrix {
 
 	/**
 	 * eine Methode rechnet die Distanzmatrix aus der Adjatzenzmatrix mit Hilfe der
-	 * distanceMatrixCreatorHelper Methode. Zuerste werden alle Einser in der
-	 * Adjatzentmatrix übernommen. Dann wird die Potenz um Eins erhöht und mit
+	 * distanceMatrixCreatorHelper Methode. Zuerste werden alle Einsen in der
+	 * Adjatzentmatrix uebernommen. Dann wird die Potenz um Eins erhoeht und mit
 	 * dieser wird der Potenzmatrix ausgerechnet. Die Distanzmatrix wird den Wert
-	 * der Potenz übernehmen nur dann, wenn der entsprechende Nuller in der
-	 * Distanzmatrix einen neuen Wert in der Potenzmatrix beträgt.
+	 * der Potenz uebernehmen nur dann, wenn der entsprechende Nuller in der
+	 * Distanzmatrix einen neuen Wert in der Potenzmatrix betraegt.
 	 * 
 	 * @return ein zweidimensionale Array
 	 */
@@ -291,7 +291,7 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode rechnet die Exzentrizitäten aller Knoten aus der Distanzmatrix
+	 * eine Methode rechnet die Exzentrizitaeten aller Knoten aus der Distanzmatrix
 	 * aus.
 	 * 
 	 * @return int[], wobei das Index der Knote ist.
@@ -309,7 +309,7 @@ public class Matrix {
 
 	/**
 	 * eine Methode rechnet den Durchmesser, den Radius und das Zentrum mit Hilfe
-	 * der exzentrizitaeten Methode aus und wirft diese und die Exzentrizitäten
+	 * der exzentrizitaeten Methode aus und wirft diese und die Exzentrizitaeten
 	 * aller Knoten in ein String hinein
 	 * 
 	 * @return String
@@ -337,8 +337,8 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode leifert eine Set von Integers zurück, die eine Menge von Knoten,
-	 * die miteinander verbunden sind, enhält.
+	 * eine Methode leifert eine Set von Integers zurueck, die eine Menge von Knoten,
+	 * die miteinander verbunden sind, enhaelt.
 	 * 
 	 * @param matrix ist ein zweidimensionale Array
 	 * @return eine Set von Konten
@@ -377,9 +377,9 @@ public class Matrix {
 
 	/**
 	 * eine Methode liefert alle Komponenten in der Matrize mit Hilfe der
-	 * verbundeneKnoten Methode zurück, sodass entweder ein Komponente im Fall vom
-	 * zusammenhängenden Graph oder zwei Komponenten rausgefunden und von der
-	 * übernommenen Matrize gelöscht werden, um den nächsten Kompente durch die
+	 * verbundeneKnoten Methode zurueck, sodass entweder ein Komponente im Fall vom
+	 * zusammenhaengenden Graph oder zwei Komponenten rausgefunden und von der
+	 * uebernommenen Matrize geloescht werden, um den naechsten Komponente durch die
 	 * verbundeneKnoten Methode rauszufinden ...usw
 	 * 
 	 * @param matrix ist ein zweidimensionale Array
@@ -479,8 +479,8 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode liefert die Artikulationen zurück, die dadurch ausgesucht
-	 * werden, dass ein Konte entfernt und überprüft wird, ob ein neuer Komponente
+	 * eine Methode liefert die Artikulationen zurueck, die dadurch ausgesucht
+	 * werden, dass ein Konte entfernt und ueberprueft wird, ob ein neuer Komponente
 	 * erzeugt wird.
 	 * 
 	 * @return die Artikulationen in Form einer Set Collection von Integers
@@ -510,9 +510,9 @@ public class Matrix {
 	}
 
 	/**
-	 * eine Methode liefert die Brücken zurück, die dadurch ausgesucht werden, dass
-	 * eine Kante entfernt und überprüft wird, ob ein neuer Komponente erzeugt wird.
-	 * Es könnte die selbe Kante zwei mals in der Liste wegen der Reihenfolge von
+	 * eine Methode liefert die Bruecken zurueck, die dadurch ausgesucht werden, dass
+	 * eine Kante entfernt und ueberprueft wird, ob ein neuer Komponente erzeugt wird.
+	 * Es koennte die selbe Kante zwei mals in der Liste wegen der Reihenfolge von
 	 * den Knoten in IntPairs geben.
 	 * 
 	 * @return eine Liste von IntPairs
