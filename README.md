@@ -9,7 +9,7 @@ Die Aufgaben sind:
 <p> 5.Brucken
 <p> 6.Komponenten
 
-Mogliche Erweiterungen f ̈ur “Sehr Gut”:
+Mogliche Erweiterungen fuer “Sehr Gut”:
 -Benutzeroberflache 
 -Eulersche Linien/Zyklen
 -Spannbaume/Geruste 
