@@ -1,5 +1,5 @@
 # Schule
-Hier mache ich die Programmieraufgabe
+
 
 Die Aufgaben sind:
 <p> 1.Bestimmung der Distanzen und Exzentrizitaten allen KnotenRadius
